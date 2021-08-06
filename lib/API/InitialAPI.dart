@@ -143,7 +143,7 @@ class _InitialAPIState extends State<InitialAPI> {
       print(datadecode[i]);
       admission.add(datadecode[i]);
     }
-    if(studentDetails[0]["student_type"] == 'hostelite'){
+    if(studentDetails[0]["student_type"] == 'Hostelite'){
       messbill();
     }
     else{
@@ -166,14 +166,17 @@ class _InitialAPIState extends State<InitialAPI> {
     print(datadecode);
     print(datadecode.length);
     mess.add(datadecode);
-    print(mess[0]["date"].substring(0,19));
+    //print(mess[0]["date"].substring(0,19));
+    print(mess[0]["date"]);
     transDate = (DateTime.now()).toString().substring(0,19);
     print(transDate);
-    dateDiff = DateTime.parse(transDate).difference(DateTime.parse(mess[0]["date"].substring(0,10))).inDays;
-    print(dateDiff);
+    //dateDiff = DateTime.parse(transDate).difference(DateTime.parse(mess[0]["date"].substring(0,10))).inDays;
+    //dateDiff = DateTime.now().month - DateTime.parse(mess[0]["date"].substring(0,10)).month;
+    dateDiff = DateTime.now().month - DateTime.parse(mess[0]["date"]).month;
+    print('dateDiff: '+dateDiff.toString());
     print(dateDiff.runtimeType);
 
-    var leaveDiff, leaveDiff2, leaveDiff3;
+    /*var leaveDiff, leaveDiff2, leaveDiff3;
     print(mess[0]["leaves"]["difference"]);
     print(mess[0]["leaves"]["dates"]);
     final leaves = json.decode(mess[0]["leaves"]["dates"]);
@@ -215,6 +218,7 @@ class _InitialAPIState extends State<InitialAPI> {
       }
     }
     print(dateDiff);
+    print('dateDiff: '+dateDiff.toString());*/
     purchaseHistory();
   }
 

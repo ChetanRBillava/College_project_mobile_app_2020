@@ -1,3 +1,9 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:ui';
+
+import 'package:image_picker/image_picker.dart';
 import 'package:mitk_final_year_project_2020/API/InitialAPI.dart';
 import 'package:mitk_final_year_project_2020/API/LoginAPI.dart';
 import 'package:mitk_final_year_project_2020/Widgets/Texts.dart';
@@ -5,6 +11,7 @@ import 'package:mitk_final_year_project_2020/Widgets/GlobalVariables.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart' as http;
 
 import 'Register.dart';
 
@@ -18,7 +25,7 @@ class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  var _formKey = GlobalKey<FormState>();
+  var _formKey = GlobalKey<FormState>(), testIMG;
 
   String user;
   String email;
@@ -47,6 +54,85 @@ class _LoginState extends State<Login> {
       Fluttertoast.showToast(msg: "Form is invalid");
     }
   }
+
+
+  void _showPicker(context) {
+    debugPrint("clicking..............");
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Photo Library'),
+                      onTap: () {
+                        _pickImage(ImageSource.gallery);
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      _pickImage(ImageSource.camera);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+    );
+  }
+
+  Future<void> _pickImage(ImageSource source) async {
+    File selected = await ImagePicker.pickImage(source: source, imageQuality: 18);
+    var img2 = selected;
+    List<int> imageBytes = img2.readAsBytesSync();
+    print('imageBytes: '+imageBytes.toString());
+    testIMG = base64.encode(imageBytes);
+    print('base64Image : '+testIMG);
+    print('Image picked');
+    test();
+    /*setState(() {
+      _imageFile = selected;
+    });
+
+    apiType='image';
+    apiBody={
+      "d_id": driverDetails[0]['d_id'],
+      "d_profile_pik": driverPic,
+    };
+
+    Timer(Duration(seconds: 1), () {
+      callAPI();
+    });*/
+  }
+
+  Future<String> test() async{
+    print("Entered test...........");
+
+    var url = domainURL+"uploadTest.php";
+    var response = await http.post(url, body: {
+      "uploadfile": testIMG,
+    });
+
+    print('Status code: '+response.statusCode.toString());
+    print(response.body);
+    var body = jsonDecode(response.body);
+    print(body["message"]);
+    /*if(response.statusCode == 200){
+      Fluttertoast.showToast(msg: "success");
+    }
+    else{
+      Fluttertoast.showToast(msg: "error");
+    }*/
+
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -79,11 +165,14 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    HeadingText(titleText: 'Login', colorUsed: Colors.black),
-                  ],
+                GestureDetector(
+                  //onTap: () => _showPicker(context),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      HeadingText(titleText: 'Login', colorUsed: Colors.black),
+                    ],
+                  ),
                 ),
                 Form(
                   key: _formKey,

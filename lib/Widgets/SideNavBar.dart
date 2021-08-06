@@ -155,7 +155,10 @@ class _SideNavBarState extends State<SideNavBar> {
       print(mess[0]["date"].substring(0,10));
       transDate = (DateTime.now()).toString().substring(0,10);
       print(transDate);
-      dateDiff = DateTime.parse(transDate).difference(DateTime.parse(mess[0]["date"].substring(0,10))).inDays;
+      dateDiff = DateTime.now().month - DateTime.parse(mess[0]["date"]).month;
+      print('dateDiff: '+dateDiff.toString());
+      print(dateDiff.runtimeType);
+      /*dateDiff = DateTime.parse(transDate).difference(DateTime.parse(mess[0]["date"].substring(0,10))).inDays;
       print(dateDiff);
       print(dateDiff.runtimeType);
 
@@ -200,7 +203,7 @@ class _SideNavBarState extends State<SideNavBar> {
           }
         }
       }
-      print(dateDiff);
+      print(dateDiff);*/
       roomRent();
     }
   }
@@ -223,7 +226,10 @@ class _SideNavBarState extends State<SideNavBar> {
     print(rent[0]["date"].substring(0,10));
     transDate = (DateTime.now()).toString().substring(0,10);
     print(transDate);
-    roomRentDateDiff = DateTime.parse(transDate).difference(DateTime.parse(rent[0]["date"].substring(0,10))).inDays;
+    roomRentDateDiff = DateTime.now().month - DateTime.parse(rent[0]["date"]).month;
+    print('roomRentDateDiff: '+roomRentDateDiff.toString());
+    print(roomRentDateDiff.runtimeType);
+    /*roomRentDateDiff = DateTime.parse(transDate).difference(DateTime.parse(rent[0]["date"].substring(0,10))).inDays;
     print(roomRentDateDiff);
     print(roomRentDateDiff.runtimeType);
 
@@ -268,7 +274,7 @@ class _SideNavBarState extends State<SideNavBar> {
         }
       }
     }
-    print(roomRentDateDiff);
+    print(roomRentDateDiff);*/
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AdmissionFee()),

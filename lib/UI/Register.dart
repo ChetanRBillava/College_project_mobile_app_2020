@@ -18,7 +18,7 @@ class _RegisterState extends State<Register> {
     gen=gender[0];
     semester=sem[0];
     studentType = stuType[0];
-    studentStatus = stuStatus[0];
+    admissionType = admisType[0];
     print(branchDropdownValue);
     super.initState();
   }
@@ -42,7 +42,7 @@ class _RegisterState extends State<Register> {
     }
   }
   String stuTypeDropdownValue = stuType[0], branchDropdownValue = branchList[0],
-      stuStatusDropdownValue = stuStatus[0], genderDropdownValue = gender[0], semDropdownValue = sem[0];
+      admissionTypeDropdownValue = admisType[0], genderDropdownValue = gender[0], semDropdownValue = sem[0];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -469,7 +469,7 @@ class _RegisterState extends State<Register> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      "Set Student status",
+                                      "Admission type",
                                       style: TextStyle(color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize: MediaQuery.of(context).size.shortestSide*0.048
@@ -483,7 +483,7 @@ class _RegisterState extends State<Register> {
                                 width: MediaQuery.of(context).size.width,
                                 child: Center(
                                   child: DropdownButton<String>(
-                                    value: stuStatusDropdownValue,
+                                    value: admissionTypeDropdownValue,
                                     dropdownColor: Colors.deepPurple,
                                     iconSize: 24,
                                     iconEnabledColor: Colors.white,
@@ -491,14 +491,14 @@ class _RegisterState extends State<Register> {
                                     style: TextStyle(color: Colors.deepPurple),
                                     onChanged: (String newValue) {
                                       setState(() {
-                                        stuStatusDropdownValue = newValue;
-                                        studentStatus = stuStatusDropdownValue;
-                                        print(studentStatus);
+                                        admissionTypeDropdownValue = newValue;
+                                        admissionType = admissionTypeDropdownValue;
+                                        print(admissionType);
                                         //vID = dropdownValue;
 
                                       });
                                     },
-                                    items: stuStatus
+                                    items: admisType
                                         .map<DropdownMenuItem<String>>((String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
@@ -510,6 +510,29 @@ class _RegisterState extends State<Register> {
                                       );
                                     }).toList(),
                                   ),
+                                ),
+                              ),
+                              SizedBox(height: MediaQuery.of(context).size.height*0.02,),
+                              //Fees
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 10.0),
+                                child: TextFormField(
+                                  style: TextStyle(color: Colors.black,
+                                      fontSize: MediaQuery.of(context).size.height*0.025
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  controller: regAdmissionFeesController,
+                                  validator: (value) =>
+                                  value.isEmpty ? 'This field cannot be blank' : null,
+                                  decoration:InputDecoration(
+                                      labelText: 'Enter Admission fees',
+                                      labelStyle:TextStyle(color: Colors.black,
+                                          fontSize: MediaQuery.of(context).size.height*0.025),
+                                      errorStyle: TextStyle(
+                                          color: Colors.pinkAccent, fontSize: 15.0),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      )),
                                 ),
                               ),
                             ],

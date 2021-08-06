@@ -78,9 +78,16 @@ Color bkg;
   @override
   void initState() {
     if(purchases[widget.index]["payment_for"].toString() == 'Stationary items'){
-      setState(() {
-        bkg = Colors.amber;
-      });
+      if(purchases[widget.index]["trans_status"]=='paid'){
+        setState(() {
+          bkg = Colors.amber[900];
+        });
+      }
+      else{
+        setState(() {
+          bkg = Colors.amber[300];
+        });
+      }
     }
     else if(purchases[widget.index]["payment_for"].toString() == 'Admission fee'){
       setState(() {
@@ -107,8 +114,14 @@ Color bkg;
         Card(
           elevation: 20,
           child: Container(
-            width: MediaQuery.of(context).size.width*0.94,
-            color: bkg,
+            //width: MediaQuery.of(context).size.width*0.94,
+            decoration: BoxDecoration(
+              color: bkg,
+              border: Border.all(
+                color: purchases[widget.index]["trans_status"]=='paid' ? bkg : Colors.red[900],
+                width: 5
+              ),
+            ),
             child: Column(
               children: [
                 Row(

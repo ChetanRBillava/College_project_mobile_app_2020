@@ -67,7 +67,8 @@ class _RegisterAPIState extends State<RegisterAPI> {
       "guardian_email": guardianMail,
       "sslc_percent": sslc,
       "puc_percent": puc,
-      "student_status": studentStatus,
+      "admission_type": admissionType,
+      "admission_fees": regAdmissionFeesController.text,
       "student_type": studentType
     };
     print(url);
